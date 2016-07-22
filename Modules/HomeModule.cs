@@ -58,15 +58,15 @@ namespace BandTracker
       Post["/venues/{id}"] = parameters => {
         Band selectedBand = Band.Find(Request.Form["add_new_band"]);
         Venue selectedVenue = Venue.Find(parameters.id);
-        selectedBand.AddVenue(selectedVenue);
+        selectedVenue.AddBand(selectedBand);
         List<Band> bandsAtVenue = selectedVenue.GetBands();
         List<Band> allBands = Band.GetAll();
 
         Dictionary<string,object> model = new Dictionary<string,object>();
 
-        model.Add("band", selectedBand);
-        model.Add("bands", bandsAtVenue);
+        model.Add("venue", selectedVenue);
         model.Add("allBands", allBands);
+        model.Add("venueBands", bandsAtVenue);
 
         return View["venue.cshtml", model];
       };
@@ -83,8 +83,6 @@ namespace BandTracker
       };
 
 
-
-
       Get["/bands"] = _ => {
         List<Band> allBands = Band.GetAll();
         return View["bands.cshtml", allBands];
@@ -94,8 +92,10 @@ namespace BandTracker
         Dictionary<string,object> model = new Dictionary<string,object>();
         Band selectedBand = Band.Find(parameters.id);
         List<Venue> venuesPlayed = selectedBand.GetVenues();
+        List<Venue> allVenues = Venue.GetAll();
         model.Add("band", selectedBand);
-        model.Add("venues", venuesPlayed);
+        model.Add("venuesPlayed", venuesPlayed);
+        model.Add("allVenues", venuesPlayed);
         return View["band.cshtml", model];
       };
 
@@ -106,12 +106,8 @@ namespace BandTracker
       Post["/bands/add"] = _ => {
         Band newBand = new Band(Request.Form["band_name"]);
         newBand.Save();
-
-        Dictionary<string,object> model = new Dictionary<string,object>();
-        List<Venue> venuesPlayed = newBand.GetVenues();
-        model.Add("band", newBand);
-        model.Add("venues", venuesPlayed);
-        return View["band.cshtml", model];
+        List<Band> allBands = Band.GetAll();
+        return View["bands.cshtml", allBands];
       };
 
       Get["/bands/update/{id}"] = parameters => {
@@ -124,8 +120,25 @@ namespace BandTracker
         selectedBand.Update(Request.Form["band_name"]);
         Dictionary<string,object> model = new Dictionary<string,object>();
         List<Venue> venuesPlayed = selectedBand.GetVenues();
+        List<Venue> allVenues = Venue.GetAll();
         model.Add("band", selectedBand);
-        model.Add("venues", venuesPlayed);
+        model.Add("venuesPlayed", venuesPlayed);
+        model.Add("allVenues", venuesPlayed);
+        return View["band.cshtml", model];
+      };
+
+      Post["/bands/{id}"] = parameters => {
+        Band selectedBand = Band.Find(parameters.id);
+        Venue selectedVenue = Venue.Find(Request.Form["add_new_venue"]);
+
+        selectedBand.AddVenue(selectedVenue);
+
+        Dictionary<string,object> model = new Dictionary<string,object>();
+        List<Venue> venuesPlayed = selectedBand.GetVenues();
+        List<Venue> allVenues = Venue.GetAll();
+        model.Add("band", selectedBand);
+        model.Add("venuesPlayed", venuesPlayed);
+        model.Add("allVenues", venuesPlayed);
         return View["band.cshtml", model];
       };
 
