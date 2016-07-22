@@ -226,6 +226,43 @@ namespace BandTracker
       return foundVenue;
     }
 
+    public static List<Venue> Search(string searchName)
+    {
+
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM venues WHERE name LIKE '%'+@SearchName+'%'", conn);
+      SqlParameter venueIdParameter = new SqlParameter();
+      venueIdParameter.ParameterName = "@SearchName";
+      venueIdParameter.Value = searchName;
+      cmd.Parameters.Add(venueIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      List<Venue> resultVenues = new List<Venue>{};
+      int foundVenueId = 0;
+      string foundVenueName = null;
+
+      while(rdr.Read())
+      {
+        foundVenueId = rdr.GetInt32(0);
+        foundVenueName = rdr.GetString(1);
+        Venue foundVenue = new Venue(foundVenueName, foundVenueId);
+        resultVenues.Add(foundVenue);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return resultVenues;
+    }
+    
     public void Update(string newName)
     {
       SqlConnection conn = DB.Connection();

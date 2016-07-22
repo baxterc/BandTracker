@@ -142,7 +142,7 @@ namespace BandTracker
       testBand.Save();
       List<Band> testBands = Band.GetAll();
 
-      List<Band> resultBands = Band.Search("Wizard People");
+      List<Band> resultBands = Band.Search(testBandName);
 
       Assert.Equal(testBands, resultBands);
     }

@@ -131,5 +131,17 @@ namespace BandTracker
 
       Assert.Equal(testBands, resultBands);
     }
+    [Fact]
+    public void Test_Search_FindsVenueInDatabaseByName()
+    {
+      string testVenueName = "Studio 54";
+      Venue testVenue = new Venue(testVenueName);
+      testVenue.Save();
+      List<Venue> testVenues = Venue.GetAll();
+
+      List<Venue> resultVenues = Venue.Search(testVenueName);
+
+      Assert.Equal(testVenues, resultVenues);
+    }
   }
 }
