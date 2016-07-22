@@ -112,5 +112,24 @@ namespace BandTracker
 
       Assert.Equal(testBands, resultBands);
     }
+
+    [Fact]
+    public void Test_DeleteBand_DeletesBandFromVenue()
+    {
+      Venue testVenue = new Venue("Studio 54");
+      testVenue.Save();
+      Band testBand = new Band("Kool and the Gang");
+      testBand.Save();
+      testVenue.AddBand(testBand);
+      Band testBand2 = new Band ("The Bee Gees");
+      testBand2.Save();
+      testVenue.AddBand(testBand2);
+
+      testVenue.DeleteBand(testBand);
+      List<Band>testBands = new List<Band>{testBand2};
+      List<Band>resultBands = testVenue.GetBands();
+
+      Assert.Equal(testBands, resultBands);
+    }
   }
 }
