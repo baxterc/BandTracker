@@ -85,5 +85,15 @@ namespace BandTracker
 
       Assert.Equal(testBands, resultBands);
     }
+
+    [Fact]
+    public void Test_GetVenues_GetsNoVenuesFromBandWithNoVenues()
+    {
+      Band testBand = new Band("Wizard People");
+
+      List<Venue> resultVenues = testBand.GetVenues();
+
+      Assert.Equal(0, resultVenues.Count);
+    }
   }
 }
