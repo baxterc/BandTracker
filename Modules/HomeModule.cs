@@ -112,6 +112,17 @@ namespace BandTracker
         model.Add("venues", venuesPlayed);
         return View["band.cshtml", model];
       };
+
+      Get["/bands/delete/{id}"] = parameters => {
+        Band selectedBand = Band.Find(parameters.id);
+        return View["band_delete_confirm.cshtml", selectedBand];
+      };
+
+      Delete["/bands"] = _ => {
+        Band deletedBand = Band.Find(Request.Form["band_id"]);
+        deletedBand.Delete();
+        return View["band_deleted.cshtml"];
+      };
     }
   }
 }
