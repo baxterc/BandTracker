@@ -20,9 +20,11 @@ namespace BandTracker
       Get["/venues/{id}"] = parameters => {
         Dictionary<string,object> model = new Dictionary<string,object>();
         Venue selectedVenue = Venue.Find(parameters.id);
+        List<Band> allBands = Band.GetAll();
         List<Band> bandsAtVenue = selectedVenue.GetBands();
         model.Add("venue", selectedVenue);
-        model.Add("bands", bandsAtVenue);
+        model.Add("allBands", allBands);
+        model.Add("venueBands", bandsAtVenue);
         return View["venue.cshtml", model];
       };
 
@@ -33,11 +35,8 @@ namespace BandTracker
       Post["/venues/add"] = _ => {
         Venue newVenue = new Venue(Request.Form["venue_name"]);
         newVenue.Save();
-        Dictionary<string,object> model = new Dictionary<string,object>();
-        List<Band> bandsAtVenue = newVenue.GetBands();
-        model.Add("venue", newVenue);
-        model.Add("bands", bandsAtVenue);
-        return View["venue.cshtml", newVenue];
+        List<Venue> allVenues = Venue.GetAll();
+        return View["venues.cshtml", allVenues];
       };
 
       Get["/venues/update/{id}"] = parameters => {
@@ -46,12 +45,29 @@ namespace BandTracker
       };
 
       Patch["/venues/{id}"] = parameters => {
-        Venue selectedVenue = Venue.Find(parameters.id);
-        selectedVenue.Update(Request.Form["venue_name"]);
         Dictionary<string,object> model = new Dictionary<string,object>();
+        Venue selectedVenue = Venue.Find(parameters.id);
+        List<Band> allBands = Band.GetAll();
         List<Band> bandsAtVenue = selectedVenue.GetBands();
         model.Add("venue", selectedVenue);
+        model.Add("allBands", allBands);
+        model.Add("venueBands", bandsAtVenue);
+        return View["venue.cshtml", model];
+      };
+
+      Post["/venues/{id}"] = parameters => {
+        Band selectedBand = Band.Find(Request.Form["add_new_band"]);
+        Venue selectedVenue = Venue.Find(parameters.id);
+        selectedBand.AddVenue(selectedVenue);
+        List<Band> bandsAtVenue = selectedVenue.GetBands();
+        List<Band> allBands = Band.GetAll();
+
+        Dictionary<string,object> model = new Dictionary<string,object>();
+
+        model.Add("band", selectedBand);
         model.Add("bands", bandsAtVenue);
+        model.Add("allBands", allBands);
+
         return View["venue.cshtml", model];
       };
 
