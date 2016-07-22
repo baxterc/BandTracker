@@ -35,7 +35,7 @@ namespace BandTracker
     }
 
     [Fact]
-    public void Test_SaveBandToDatabase()
+    public void Test_Save_SavesBandToDatabase()
     {
       Band testBand = new Band("Wizard People");
 
@@ -47,7 +47,7 @@ namespace BandTracker
     }
 
     [Fact]
-    public void Test_FindFindsBandInDatabase()
+    public void Test_Find_FindsBandInDatabase()
     {
       Band testBand = new Band("Wizard People");
       testBand.Save();
@@ -55,6 +55,18 @@ namespace BandTracker
       Band foundBand = Band.Find(testBand.GetId());
 
       Assert.Equal(testBand, foundBand);
+    }
+
+    [Fact]
+    public void Test_Update_UpdatesBandInDatabase()
+    {
+      Band testBand = new Band("Wizard People");
+      testBand.Save();
+      string newBandName = "Dear Readers";
+
+      testBand.Update(newBandName);
+
+      Assert.Equal(newBandName, testBand.GetName());      
     }
   }
 }
