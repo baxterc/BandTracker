@@ -97,6 +97,21 @@ namespace BandTracker
         model.Add("venues", venuesPlayed);
         return View["band.cshtml", model];
       };
+
+      Get["/bands/update/{id}"] = parameters => {
+        Band selectedBand = Band.Find(parameters.id);
+        return View["band_update.cshtml", selectedBand];
+      };
+
+      Patch["/bands/{id}"] = parameters => {
+        Band selectedBand = Band.Find(parameters.id);
+        selectedBand.Update(Request.Form["band_name"]);
+        Dictionary<string,object> model = new Dictionary<string,object>();
+        List<Venue> venuesPlayed = selectedBand.GetVenues();
+        model.Add("band", selectedBand);
+        model.Add("venues", venuesPlayed);
+        return View["band.cshtml", model];
+      };
     }
   }
 }

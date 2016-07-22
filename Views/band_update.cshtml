@@ -1,0 +1,11 @@
+<h2>Update @Model.GetName()</h2>
+
+<form action="/bands/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <label for="band_name">Edit Band Name: </label>
+  <input type="text" name="band_name" required>
+  <button type="submit" name="button">Edit this Band</button>
+</form>
+
+<a href="/bands/@Model.GetId()">Back to this band page</a>
+<a href="/">Back to Main Page</a>
