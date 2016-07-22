@@ -95,6 +95,7 @@ namespace BandTracker
 
       Assert.Equal(0, resultVenues.Count);
     }
+
     [Fact]
     public void Test_AddVenue_AddsVenueToBand()
     {
@@ -106,6 +107,29 @@ namespace BandTracker
 
       testBand.AddVenue(testVenue);
       testVenues.Add(testVenue);
+      List<Venue> resultVenues = testBand.GetVenues();
+
+      Assert.Equal(testVenues, resultVenues);
+    }
+    [Fact]
+    public void Test_DeleteVenue_DeletesVenueFromBand()
+    {
+      List<Venue> testVenues = new List<Venue>{};
+      Band testBand = new Band("Wizard People");
+      testBand.Save();
+
+      Venue testVenue = new Venue("Studio 54");
+      testVenue.Save();
+      testVenues.Add(testVenue);
+      testBand.AddVenue(testVenue);
+
+      Venue testVenue2 = new Venue("The China Club");
+      testVenue2.Save();
+      testVenues.Add(testVenue2);
+      testBand.AddVenue(testVenue2);
+
+      testBand.DeleteVenue(testVenue);
+      testVenues.Remove(testVenue);
       List<Venue> resultVenues = testBand.GetVenues();
 
       Assert.Equal(testVenues, resultVenues);

@@ -122,7 +122,32 @@ namespace BandTracker
       bandIdParameter.ParameterName = "@BandId";
       bandIdParameter.Value = this.GetId();
       cmd.Parameters.Add(bandIdParameter);
-      
+
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public void DeleteVenue(Venue removedVenue)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM bands_venues WHERE venue_id = @VenueId AND band_id = @BandId", conn);
+
+      SqlParameter venueIdParameter = new SqlParameter();
+      venueIdParameter.ParameterName = "@VenueId";
+      venueIdParameter.Value = removedVenue.GetId();
+      cmd.Parameters.Add(venueIdParameter);
+
+      SqlParameter bandIdParameter = new SqlParameter();
+      bandIdParameter.ParameterName = "@BandId";
+      bandIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(bandIdParameter);
+
       cmd.ExecuteNonQuery();
 
       if (conn != null)
