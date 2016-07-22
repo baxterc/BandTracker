@@ -1,5 +1,18 @@
 <h2>@Model["band"].GetName()</h2>
 
 
+@if (Model["venues"].Count == 0)
+{
+  <p>This band has not played any venues.</p>
+}
+else
+{
+  <ul>
+  @foreach (var venue in Model["venues"])
+  {
+    <li><a href="/venues/@venue.GetId()">@venue.GetName()</a></li>
+  }
+  </ul>
+}
 
 <a href="/">Back to Main Page</a>
