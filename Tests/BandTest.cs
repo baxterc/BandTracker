@@ -95,5 +95,20 @@ namespace BandTracker
 
       Assert.Equal(0, resultVenues.Count);
     }
+    [Fact]
+    public void Test_AddVenue_AddsVenueToBand()
+    {
+      Band testBand = new Band("Wizard People");
+      testBand.Save();
+      Venue testVenue = new Venue("Studio 54");
+      testVenue.Save();
+      List<Venue> testVenues = new List<Venue>{};
+
+      testBand.AddVenue(testVenue);
+      testVenues.Add(testVenue);
+      List<Venue> resultVenues = testBand.GetVenues();
+
+      Assert.Equal(testVenues, resultVenues);
+    }
   }
 }
