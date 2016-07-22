@@ -28,6 +28,12 @@ namespace BandTracker
         return View["venue.cshtml", model];
       };
 
+      Get["/venues/search"] = _ => {
+        string searchString = Request.Query["venue_search"];
+        List<Venue> resultVenues = Venue.Search(searchString);
+        return View["venue_results.cshtml", resultVenues];
+      };
+
       Get["/venues/add"] = _ => {
         return View["venue_add.cshtml"];
       };
