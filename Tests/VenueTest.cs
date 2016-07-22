@@ -16,6 +16,7 @@ namespace BandTracker
     public void Dispose()
     {
       Venue.DeleteAll();
+      Band.DeleteAll();
     }
 
     [Fact]
@@ -74,7 +75,6 @@ namespace BandTracker
     [Fact]
     public void Test_Delete_DeletesVenueFromDatabase()
     {
-
       Venue testVenue = new Venue("Studio 54");
       Venue testVenue2 = new Venue("The China Club");
       testVenue.Save();
@@ -86,6 +86,16 @@ namespace BandTracker
       List<Venue> resultVenues = Venue.GetAll();
 
       Assert.Equal(testVenues, resultVenues);
+    }
+
+    [Fact]
+    public void Test_GetBands_GetsNoBandsFromVenueWithNoBands()
+    {
+      Venue testVenue = new Venue("Studio 54");
+
+      List<Band>resultBands = testVenue.GetBands();
+
+      Assert.Equal(0, resultBands.Count);
     }
   }
 }
