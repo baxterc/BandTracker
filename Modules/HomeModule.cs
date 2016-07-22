@@ -33,7 +33,6 @@ namespace BandTracker
       Post["/venues/add"] = _ => {
         Venue newVenue = new Venue(Request.Form["venue_name"]);
         newVenue.Save();
-
         Dictionary<string,object> model = new Dictionary<string,object>();
         List<Band> bandsAtVenue = newVenue.GetBands();
         model.Add("venue", newVenue);
@@ -49,14 +48,25 @@ namespace BandTracker
       Patch["/venues/{id}"] = parameters => {
         Venue selectedVenue = Venue.Find(parameters.id);
         selectedVenue.Update(Request.Form["venue_name"]);
-
         Dictionary<string,object> model = new Dictionary<string,object>();
-
         List<Band> bandsAtVenue = selectedVenue.GetBands();
         model.Add("venue", selectedVenue);
         model.Add("bands", bandsAtVenue);
         return View["venue.cshtml", model];
       };
+
+      Get["/venues/delete/{id}"] = parameters => {
+        Venue selectedVenue = Venue.Find(parameters.id);
+        return View["venue_delete_confirm.cshtml", selectedVenue];
+      };
+
+      Delete["/venues"] = _ => {
+        Venue deletedVenue = Venue.Find(Request.Form["venue_id"]);
+        deletedVenue.Delete();
+        return View["venue_deleted.cshtml"];
+      };
+
+
 
 
       Get["/bands"] = _ => {
