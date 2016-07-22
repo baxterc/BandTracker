@@ -66,7 +66,23 @@ namespace BandTracker
 
       testBand.Update(newBandName);
 
-      Assert.Equal(newBandName, testBand.GetName());      
+      Assert.Equal(newBandName, testBand.GetName());
+    }
+
+    [Fact]
+    public void Test_Delete_RemovesBandFromDatabase()
+    {
+      Band testBand = new Band("Wizard People");
+      testBand.Save();
+      Band testBand2 = new Band("Dear Readers");
+      testBand2.Save();
+      List<Band> testBands = new List<Band>{testBand, testBand2};
+
+      testBand.Delete();
+      testBands.Remove(testBand);
+      List<Band> resultBands = Band.GetAll();
+
+      Assert.Equal(testBands, resultBands);
     }
   }
 }
