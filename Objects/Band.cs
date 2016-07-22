@@ -227,7 +227,7 @@ namespace BandTracker
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM bands WHERE name LIKE @SearchName;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM bands WHERE name LIKE '%'+@SearchName+'%'", conn);
       SqlParameter bandIdParameter = new SqlParameter();
       bandIdParameter.ParameterName = "@SearchName";
       bandIdParameter.Value = searchName;

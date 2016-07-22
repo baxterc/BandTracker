@@ -111,6 +111,12 @@ namespace BandTracker
         return View["band.cshtml", model];
       };
 
+      Get["/bands/search"] = _ => {
+        string searchString = Request.Query["band_search"];
+        List<Band> resultBands = Band.Search(searchString);
+        return View["band_results.cshtml", resultBands];
+      };
+
       Get["/bands/add"] = _ => {
         return View["band_add.cshtml"];
       };
