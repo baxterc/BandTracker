@@ -143,5 +143,15 @@ namespace BandTracker
 
       Assert.Equal(testVenues, resultVenues);
     }
+    // [Fact]
+    // public void Test_GetTitleCaseName_GetsTitleCaseVersionOfVenueName()
+    // {
+    //   string testVenueName = "studio 54";
+    //   Venue testVenue = new Venue(testVenueName);
+    //   testVenue.Save();
+    //   string resultString = testVenue.GetTitleCaseName();
+    //
+    //   Assert.Equal("Studio 54", resultString);
+    // }
   }
 }

@@ -74,6 +74,37 @@ namespace BandTracker
       }
       return allVenues;
     }
+    // public string GetTitleCaseName()
+    // {
+    //
+    //   SqlConnection conn = DB.Connection();
+    //   SqlDataReader rdr = null;
+    //   conn.Open();
+    //
+    //   SqlCommand cmd = new SqlCommand("SELECT * FROM venues WHERE name LIKE '%'+@SearchName+'%'", conn);
+    //   SqlParameter venueIdParameter = new SqlParameter();
+    //
+    //
+    //   string[] venueWords = this.GetName().Split(' ');
+    //   List<string> titleLowers = new List<string> {"a", "an", "as", "at", "the", "of", "for", "and", "or", "nor", "to"};
+    //
+    //   for (int i = 0; i < venueWords.Length; i++)
+    //   {
+    //     foreach (string lower in titleLowers)
+    //     {
+    //       if (venueWords[i].ToLower() == lower && i != 0)
+    //       {
+    //         venueWords[i] = lower;
+    //       }
+    //       else
+    //       {
+    //         venueWords[i][0] = Char.ToUpper(venueWords[i][0]);
+    //       }
+    //     }
+    //   }
+    //   string venueName = String.Join(" ", venueWords);
+    //   return venueName;
+    // }
 
     public List<Band> GetBands()
     {
@@ -262,7 +293,7 @@ namespace BandTracker
       }
       return resultVenues;
     }
-    
+
     public void Update(string newName)
     {
       SqlConnection conn = DB.Connection();
