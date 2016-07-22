@@ -6,11 +6,15 @@ using System.Data.SqlClient;
 
 namespace BandTracker
 {
-  public class BandTest
+  public class BandTest : IDisposable
   {
     public BandTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=band_tracker_test;Integrated Security=SSPI;";
+    }
+    public void Dispose()
+    {
+      Band.DeleteAll();
     }
 
     [Fact]
@@ -24,12 +28,22 @@ namespace BandTracker
     [Fact]
     public void Test_Equal_ReturnsTrueIfBandsAreTheSame()
     {
-      //Arrange, Act
       Band firstBand = new Band("Wizard People");
       Band secondBand = new Band("Wizard People");
 
-      //Assert
       Assert.Equal(firstBand, secondBand);
+    }
+
+    [Fact]
+    public void Test_SaveBandToDatabase()
+    {
+      Band testBand = new Band("Wizard People");
+
+      testBand.Save();
+      List<Band> result = Band.GetAll();
+      List<Band> testList = new List<Band>{testBand};
+
+      Assert.Equal(testList, result);
     }
   }
 }
