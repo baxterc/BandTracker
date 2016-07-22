@@ -5,7 +5,7 @@
 #### By Charlie Baxter
 
 ## Description
-This site uses a database to show what bands have played at what venue.  Since a band can play at many venues and a venue can have many bands associated with it, the database uses a join table to store these many-to-many relations.  Join statements allow the user to see what bands have played at what venue, and what venues a given band has played at.  Individual bands and venues can be created, read, updated and deleted.
+This site uses a database to show what bands have played at what venue.  Since a band can play at many venues and a venue can have many bands associated with it, the database uses a join table to store these many-to-many relations.  Join statements allow the user to see what bands have played at what venue, and what venues a given band has played at.  These relationships can be entered in by the users.  Individual bands and venues themselves can be created, read, updated and deleted.  The main page includes a search field for bands and venues in addition to pages which simply list all bands and all venues.
 
 ## Setup
 * Clone this repository
@@ -37,6 +37,7 @@ Application started. Press Ctrl+C to shut down.
 ## Features to add:
 * Automatically convert user input for venues and bands to grammatically correct title case (some of the code for this is commented out on lines 77 - 107 in Venue.cs)
 * Create a Concert object that includes a date property rather than just joining the bands and venues together.
+* Needs styling to be easier to look at!
 
 ## Contact & Support
 If you run into any issues with this page, have any questions, ideas, or concerns, feel free to email me at charlie.r.baxter@gmail.com.
