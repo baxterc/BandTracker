@@ -25,6 +25,16 @@ namespace BandTracker
         model.Add("bands", bandsAtVenue);
         return View["venue.cshtml", model];
       };
+
+      Get["/venues/add"] = _ => {
+        return View["venue_add.cshtml"];
+      };
+
+      Post["/venues/add"] = _ => {
+        Venue newVenue = new Venue(Request.Form["venue_name"]);
+        newVenue.Save();
+        return View["venue.cshtml", newVenue];
+      };
     }
   }
 }
