@@ -56,14 +56,12 @@ namespace BandTracker
       };
 
       Post["/venues/{id}"] = parameters => {
+        Dictionary<string,object> model = new Dictionary<string,object>();
         Band selectedBand = Band.Find(Request.Form["add_new_band"]);
         Venue selectedVenue = Venue.Find(parameters.id);
         selectedVenue.AddBand(selectedBand);
         List<Band> bandsAtVenue = selectedVenue.GetBands();
         List<Band> allBands = Band.GetAll();
-
-        Dictionary<string,object> model = new Dictionary<string,object>();
-
         model.Add("venue", selectedVenue);
         model.Add("allBands", allBands);
         model.Add("venueBands", bandsAtVenue);
@@ -80,6 +78,20 @@ namespace BandTracker
         Venue deletedVenue = Venue.Find(Request.Form["venue_id"]);
         deletedVenue.Delete();
         return View["venue_deleted.cshtml"];
+      };
+
+      Delete["/venues/{id}"] = parameters => {
+        Dictionary<string,object> model = new Dictionary<string,object>();
+        Venue selectedVenue = Venue.Find(parameters.id);
+        Band selectedBand = Band.Find(Request.Form["band_id"]);
+        selectedVenue.DeleteBand(selectedBand);
+        List<Band> bandsAtVenue = selectedVenue.GetBands();
+        List<Band> allBands = Band.GetAll();
+        model.Add("venue", selectedVenue);
+        model.Add("allBands", allBands);
+        model.Add("venueBands", bandsAtVenue);
+
+        return View["venue.cshtml", model];
       };
 
 
@@ -116,9 +128,9 @@ namespace BandTracker
       };
 
       Patch["/bands/{id}"] = parameters => {
+        Dictionary<string,object> model = new Dictionary<string,object>();
         Band selectedBand = Band.Find(parameters.id);
         selectedBand.Update(Request.Form["band_name"]);
-        Dictionary<string,object> model = new Dictionary<string,object>();
         List<Venue> venuesPlayed = selectedBand.GetVenues();
         List<Venue> allVenues = Venue.GetAll();
         model.Add("band", selectedBand);
@@ -128,12 +140,10 @@ namespace BandTracker
       };
 
       Post["/bands/{id}"] = parameters => {
+        Dictionary<string,object> model = new Dictionary<string,object>();
         Band selectedBand = Band.Find(parameters.id);
         Venue selectedVenue = Venue.Find(Request.Form["add_new_venue"]);
-
         selectedBand.AddVenue(selectedVenue);
-
-        Dictionary<string,object> model = new Dictionary<string,object>();
         List<Venue> venuesPlayed = selectedBand.GetVenues();
         List<Venue> allVenues = Venue.GetAll();
         model.Add("band", selectedBand);

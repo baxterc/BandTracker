@@ -8,9 +8,16 @@
 else
 {
   <ul>
+
   @foreach (var venue in Model["venuesPlayed"])
   {
-    <li><a href="/venues/@venue.GetId()">@venue.GetName()</a></li>
+    <li>
+      <form action="/bands/@Model["band"].GetId()" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="hidden" name="venue_id" value="@venue.GetId()">
+      <a href="/venues/@venue.GetId()">@venue.GetName()</a> | <button type="submit">Remove this Venue</button>
+      </form>
+    </li>
   }
   </ul>
 }
