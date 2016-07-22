@@ -57,5 +57,17 @@ namespace BandTracker
 
       Assert.Equal(testVenue, foundVenue);
     }
+    [Fact]
+    public void Test_Update_UpdatesVenueInDatabase()
+    {
+      Venue testVenue = new Venue("Studio 54");
+      testVenue.Save();
+      string newVenueName = "The China Club";
+
+      testVenue.Update(newVenueName);
+      string resultName = testVenue.GetName();
+
+      Assert.Equal(newVenueName, resultName);
+    }
   }
 }
