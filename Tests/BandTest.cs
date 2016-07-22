@@ -134,5 +134,17 @@ namespace BandTracker
 
       Assert.Equal(testVenues, resultVenues);
     }
+    [Fact]
+    public void Test_Search_FindsBandInDatabaseByName()
+    {
+      string testBandName = "Wizard People";
+      Band testBand = new Band(testBandName);
+      testBand.Save();
+      List<Band> testBands = Band.GetAll();
+
+      List<Band> resultBands = Band.Search(testBandName);
+
+      Assert.Equal(testBands, resultBands);
+    }
   }
 }

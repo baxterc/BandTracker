@@ -220,6 +220,43 @@ namespace BandTracker
       return foundBand;
     }
 
+    public static List<Band> Search(string searchName)
+    {
+
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM bands WHERE name LIKE @SearchName;", conn);
+      SqlParameter bandIdParameter = new SqlParameter();
+      bandIdParameter.ParameterName = "@SearchName";
+      bandIdParameter.Value = searchName;
+      cmd.Parameters.Add(bandIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      List<Band> resultBands = new List<Band>{};
+      int foundBandId = 0;
+      string foundBandName = null;
+
+      while(rdr.Read())
+      {
+        foundBandId = rdr.GetInt32(0);
+        foundBandName = rdr.GetString(1);
+        Band foundBand = new Band(foundBandName, foundBandId);
+        resultBands.Add(foundBand);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return resultBands;
+    }
+
     public void Update(string newName)
     {
       SqlConnection conn = DB.Connection();
