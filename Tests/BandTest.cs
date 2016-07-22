@@ -20,5 +20,16 @@ namespace BandTracker
 
       Assert.Equal(0, result);
     }
+
+    [Fact]
+    public void Test_Equal_ReturnsTrueIfBandsAreTheSame()
+    {
+      //Arrange, Act
+      Band firstBand = new Band("Wizard People");
+      Band secondBand = new Band("Wizard People");
+
+      //Assert
+      Assert.Equal(firstBand, secondBand);
+    }
   }
 }
