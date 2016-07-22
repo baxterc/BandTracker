@@ -83,7 +83,7 @@ namespace BandTracker
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT bands.* from venues JOIN bands_venues ON (venues.id = bands_venues.venue_id) JOIN bands ON (bands_venues.band_id = bands.id) WHERE venues.id = @VenueId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT bands.* from venues JOIN concerts ON (venues.id = concerts.venue_id) JOIN bands ON (concerts.band_id = bands.id) WHERE venues.id = @VenueId;", conn);
 
       SqlParameter venueIdParameter = new SqlParameter();
       venueIdParameter.ParameterName = "@VenueId";
@@ -111,7 +111,7 @@ namespace BandTracker
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO bands_venues (band_id, venue_id) VALUES (@BandID, @VenueId);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO concerts (band_id, venue_id) VALUES (@BandID, @VenueId);", conn);
 
       SqlParameter bandIdParameter = new SqlParameter();
       bandIdParameter.ParameterName = "@BandId";
@@ -136,7 +136,7 @@ namespace BandTracker
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM bands_venues WHERE band_id = @BandId AND venue_id = @VenueId", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM concerts WHERE band_id = @BandId AND venue_id = @VenueId", conn);
 
       SqlParameter bandIdParameter = new SqlParameter();
       bandIdParameter.ParameterName = "@BandId";
@@ -188,7 +188,7 @@ namespace BandTracker
     {
      SqlConnection conn = DB.Connection();
      conn.Open();
-     SqlCommand cmd = new SqlCommand("DELETE FROM venues; DELETE FROM bands_venues", conn);
+     SqlCommand cmd = new SqlCommand("DELETE FROM venues; DELETE FROM concerts", conn);
      cmd.ExecuteNonQuery();
     }
 
@@ -267,7 +267,7 @@ namespace BandTracker
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM venues WHERE id = @VenueId; DELETE FROM bands_venues WHERE venue_id = @VenueId;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM venues WHERE id = @VenueId; DELETE FROM concerts WHERE venue_id = @VenueId;", conn);
 
       SqlParameter venueIdParameter = new SqlParameter();
       venueIdParameter.ParameterName = "@VenueId";
