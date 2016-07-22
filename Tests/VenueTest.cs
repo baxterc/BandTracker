@@ -15,7 +15,7 @@ namespace BandTracker
 
     public void Dispose()
     {
-      // Venue.DeleteAll();
+      Venue.DeleteAll();
     }
 
     [Fact]
@@ -33,6 +33,18 @@ namespace BandTracker
       Venue secondVenue = new Venue("Studio 54");
 
       Assert.Equal(firstVenue, secondVenue);
+    }
+
+    [Fact]
+    public void Test_Save_SavesVenueToDatabase()
+    {
+      Venue testVenue = new Venue("Studio 54");
+
+      testVenue.Save();
+      List<Venue> testVenues = new List<Venue>{testVenue};
+      List<Venue> resultVenues = Venue.GetAll();
+
+      Assert.Equal(testVenues, resultVenues);
     }
   }
 }
