@@ -57,6 +57,7 @@ namespace BandTracker
 
       Assert.Equal(testVenue, foundVenue);
     }
+
     [Fact]
     public void Test_Update_UpdatesVenueInDatabase()
     {
@@ -68,6 +69,23 @@ namespace BandTracker
       string resultName = testVenue.GetName();
 
       Assert.Equal(newVenueName, resultName);
+    }
+
+    [Fact]
+    public void Test_Delete_DeletesVenueFromDatabase()
+    {
+
+      Venue testVenue = new Venue("Studio 54");
+      Venue testVenue2 = new Venue("The China Club");
+      testVenue.Save();
+      testVenue2.Save();
+      List<Venue> testVenues = new List<Venue>{testVenue, testVenue2};
+
+      testVenue.Delete();
+      testVenues.Remove(testVenue);
+      List<Venue> resultVenues = Venue.GetAll();
+
+      Assert.Equal(testVenues, resultVenues);
     }
   }
 }
