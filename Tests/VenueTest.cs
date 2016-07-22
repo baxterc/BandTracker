@@ -6,19 +6,33 @@ using System.Data.SqlClient;
 
 namespace BandTracker
 {
-  public class VenueTest
+  public class VenueTest : IDisposable
   {
     public VenueTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=band_tracker_test;Integrated Security=SSPI;";
     }
-    
+
+    public void Dispose()
+    {
+      // Venue.DeleteAll();
+    }
+
     [Fact]
     public void Test_DatabaseEmptyAtFirst()
     {
       int result = Venue.GetAll().Count;
 
       Assert.Equal(0, result);
+    }
+
+    [Fact]
+    public void Test_Equal_ReturnsTrueIfVenuesAreTheSame()
+    {
+      Venue firstVenue = new Venue("Studio 54");
+      Venue secondVenue = new Venue("Studio 54");
+
+      Assert.Equal(firstVenue, secondVenue);
     }
   }
 }
